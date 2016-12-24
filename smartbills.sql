@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2016 at 04:01 PM
+-- Generation Time: Dec 24, 2016 at 09:35 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -186,6 +186,19 @@ CREATE TABLE `precision_description` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `precision_sample`
+--
+
+CREATE TABLE `precision_sample` (
+  `srno` int(11) NOT NULL,
+  `bill_srno` int(11) NOT NULL,
+  `sample1` text NOT NULL,
+  `sample2` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `purchase_fine`
 --
 
@@ -250,6 +263,20 @@ CREATE TABLE `purchase_precision_paid` (
   `details` varchar(250) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reminder`
+--
+
+CREATE TABLE `reminder` (
+  `srno` int(11) NOT NULL,
+  `period` text NOT NULL COMMENT 'd-daily, m-monthly, y-yearly',
+  `remindertext` text NOT NULL,
+  `date` date NOT NULL,
+  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -376,6 +403,12 @@ ALTER TABLE `precision_description`
   ADD PRIMARY KEY (`srno`);
 
 --
+-- Indexes for table `precision_sample`
+--
+ALTER TABLE `precision_sample`
+  ADD PRIMARY KEY (`srno`);
+
+--
 -- Indexes for table `purchase_fine`
 --
 ALTER TABLE `purchase_fine`
@@ -397,6 +430,12 @@ ALTER TABLE `purchase_precision`
 -- Indexes for table `purchase_precision_paid`
 --
 ALTER TABLE `purchase_precision_paid`
+  ADD PRIMARY KEY (`srno`);
+
+--
+-- Indexes for table `reminder`
+--
+ALTER TABLE `reminder`
   ADD PRIMARY KEY (`srno`);
 
 --
@@ -466,17 +505,22 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `precision_bill`
 --
 ALTER TABLE `precision_bill`
-  MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `precision_company_paid`
 --
 ALTER TABLE `precision_company_paid`
-  MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `precision_description`
 --
 ALTER TABLE `precision_description`
-  MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `precision_sample`
+--
+ALTER TABLE `precision_sample`
+  MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `purchase_fine`
 --
@@ -497,6 +541,11 @@ ALTER TABLE `purchase_precision`
 --
 ALTER TABLE `purchase_precision_paid`
   MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+--
+-- AUTO_INCREMENT for table `reminder`
+--
+ALTER TABLE `reminder`
+  MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `salarygiven`
 --
