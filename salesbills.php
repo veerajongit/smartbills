@@ -187,11 +187,11 @@ $conn->close();
                 <td><?=$row['vat']?></td>
                 <td><?=$row['other_charges']?></td>
                 <td><?=$total?></td>
-                <td align="center"><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal<?=$row['bill_no']?>">
+                <td align="center"><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal<?=$row['srno']?>">
                 <i class="fa fa-cog" aria-hidden="true"></i>
                 </button></td>
                 <td align="center"><a href="salesbills.php?deletebill=<?=$row['srno']?>"><button class="btn btn-default"><i class="fa fa-times" aria-hidden="true" style="color:red"></i></button></a></td>
-                <td></td>
+                <td><button class="btn btn-success" onclick="location.href='editbill.php?billno=<?=$row['srno']?>' ">Edit</button></td>
                 <td><button class="btn btn-success" onclick="addsample(<?=$row['srno']?>)">Add</button></td>
                 <td><button class="btn btn-success" onclick=" window.open('bill_challan.php?billno=<?=$row['srno']?>', '', 'width=800,height=1000') ">Print</button></td>
                 <td><button class="btn btn-success" onclick=" window.open('bill_invoice.php?billno=<?=$row['srno']?>', '', 'width=800,height=1000') ">Print</button></td>
@@ -215,7 +215,7 @@ if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) { ?>
     <!-- Modal -->
-    <div id="myModal<?=$row['bill_no']?>" class="modal fade" role="dialog">
+    <div id="myModal<?=$row['srno']?>" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
 
         <!-- Modal content-->
@@ -314,7 +314,7 @@ $conn->close();
             </div>
             <div class="modal-body">
                 <form method="post">
-                    <div class="form-inline">
+                    <div class="col-md-12">
                         <div class="form-group col-md-3">
                             <label for="itemname">Bill No:</label>
                             <input type="text" class="form-control" id="billno" name="billno" value="<?=$newbillno?>" required>
@@ -350,7 +350,7 @@ $conn->close();
                         </div>
                     </div>
                     <hr style="margin: 5px">
-                    <div class="">
+                    <div class="col-md-12">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="itemname">Item Name:</label>
@@ -424,43 +424,6 @@ $conn->close();
                         </div>
                     </div>
                     <hr>
-                    <div class="form-group">
-                        <button class="btn btn-info">Submit</button>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<div id="myModalpurchase" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Paid Details</h4>
-            </div>
-            <div class="modal-body">
-                <form method="post">
-                    <input type="number" class="hidden" name="srnopurchase" id="srnopurchase" required>
-                    <div class="form-group">
-                        <label for="itemprice">Paid Date:</label>
-                        <input type="text" class="form-control datepicker" id="paiddate" name="paiddate" value="<?=date('d-m-Y')?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="itemlabour">Paid Amount:</label>
-                        <input type="number" class="form-control" id="paidamount" step="any" name="paidamount" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="itemlabour">Payment Details:</label>
-                        <input type="text" class="form-control" id="details" name="details" required>
-                    </div>
                     <div class="form-group">
                         <button class="btn btn-info">Submit</button>
                     </div>

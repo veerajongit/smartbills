@@ -35,7 +35,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-if($_REQUEST['deletepaid']){
+if(isset($_REQUEST['deletepaid']) && $_REQUEST['deletepaid']){
 	$sql = "DELETE FROM `smartbills`.`fine_company_paid` WHERE `fine_company_paid`.`srno` = ".$_REQUEST['deletepaid'];
 	$conn->query($sql);
 	header('location:salereport.php?party_name='.$_REQUEST['party_name']);
@@ -62,7 +62,7 @@ $result1 = $conn->query($sql1); ?>
         echo "<div class='col-md-2'><a href='salereport.php'>All</a></div>";
     }
     while ($row1 = $result1->fetch_assoc()) {
-        if($_REQUEST['party_name'] == $row1['buyer_name']){
+        if(isset($_REQUEST['party_name']) && $_REQUEST['party_name'] == $row1['buyer_name']){
             echo "<div class='col-md-2'><a href='salereport.php?party_name=" . $row1['buyer_name'] . "' style='pointer-events: none; font-weight:bold; color:darkblue'>" . $row1['buyer_name'] . "</a></div>";
         }else {
             echo "<div class='col-md-2'><a href='salereport.php?party_name=" . $row1['buyer_name'] . "'>" . $row1['buyer_name'] . "</a></div>";
@@ -200,7 +200,7 @@ if ($result1->num_rows > 0) {
                                         </tr>
                                         <?php
                                         $monthly_total = $monthly_total + $total;
-                                        $monthly_paid_total = $monthly_paid_total + $paid_total;
+                                        $monthly_paid_total = $monthly_paid_total + $total;
                                     } ?>
                                     
                                     <?php
@@ -258,7 +258,7 @@ if ($result1->num_rows > 0) {
     } ?>
     <?php
 }
-$conn->close();
+
 ?>
 <div class="container" style="text-align: center; padding: 20px">
     <table class="table table-hover" style="background-color: greenyellow"><tr>
@@ -267,6 +267,100 @@ $conn->close();
             </td>
 </tr></table>
 </div>
+
+
+<?php
+$sql = "SELECT * FROM ".$table_name."_bill";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) { ?>
+        <!-- Modal -->
+        <div id="myModal<?=$row['bill_no']?>" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Details For Bill No. <?=$row['bill_no']?></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                            <th>Item Name</th>
+                            <th>Quantity</th>
+                            <th>Rate</th>
+                            <th>Weight</th>
+                            <th>Total</th>
+                            <th>Labour</th>
+                            </thead>
+                            <tbody>
+                            <?php
+                            $sql2="SELECT * FROM ".$table_name."_description WHERE billno=".$row['srno'];
+                            $result2 = $conn->query($sql2);
+
+                            $totalqty=0;
+                            $totalrate=0;
+                            $totalweight=0;
+                            $totalprice=0;
+                            $totallabour=0;
+
+                            if ($result2->num_rows > 0) {
+                                // output data of each row
+                                while($row2 = $result2->fetch_assoc()) {
+                                    $totalqty=$totalqty + $row2['quantity'];
+                                    $totalrate=$totalrate + $row2['item_rate'];
+                                    $totalweight=$totalweight + $row2['weight'];
+                                    $totalprice=$totalprice + ($row2['quantity']*$row2['item_rate']);
+                                    $totallabour= $totallabour + ($row2['labour']*$row2['quantity']);
+
+                                    ?>
+                                    <tr>
+                                        <td><?=$row2['item_name']?></td>
+                                        <td><?=$row2['quantity']?></td>
+                                        <td><?=$row2['item_rate']?></td>
+                                        <td><?=$row2['weight']?></td>
+                                        <td><?=$row2['quantity']*$row2['item_rate']?></td>
+                                        <td><?=$row2['labour']*$row2['quantity']?></td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+
+                            if($totalprice > 0){ ?>
+                                <tr style="font-weight:bold">
+                                    <td>Total Amount</td>
+                                    <td><?=$totalqty?></td>
+                                    <td></td>
+                                    <td><?=$totalweight?></td>
+                                    <td><?=$totalprice?></td>
+                                    <td><?=$totallabour?></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>VAT : <?=round(($row['vat']/100) * ($totalprice + $row['other_charges']))?></b></td>
+                                    <td colspan="2"><b>Other Charges : <?=$row['other_charges']?></b></td>
+                                    <td colspan="2"><b>Grand Total : <?=round(round(($row['vat']/100) * ($totalprice + $row['other_charges'])) + $totalprice) + $row['other_charges']?></b></td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <?php
+    }
+}
+$conn->close();
+?>
+
 
 <script>
     $( function() {

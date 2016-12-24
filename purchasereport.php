@@ -45,7 +45,7 @@ if(!isset($_REQUEST['party_name'])){
 }
 
 while ($row1 = $result1->fetch_assoc()) {
-    if($_REQUEST['party_name'] == $row1['party_name']){
+    if(isset($_REQUEST['party_name']) && $_REQUEST['party_name'] == $row1['party_name']){
         echo "<div class='col-md-2'><a href='purchasereport.php?party_name=" . $row1['party_name'] . "' style='pointer-events: none; font-weight:bold; color:darkblue'>" . $row1['party_name'] . "</a></div>";
     }else {
         echo "<div class='col-md-2'><a href='purchasereport.php?party_name=" . $row1['party_name'] . "'>" . $row1['party_name'] . "</a></div>";

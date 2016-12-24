@@ -80,7 +80,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-        $billno = $row['srno'];
+        $billno = $row['bill_no'];
         $date = date('d-m-Y', strtotime($row['sell_date']));
         $buyername = $row['buyer_name'];
         $buyeraddress = $row['buyer_address'];
@@ -125,12 +125,12 @@ if ($result->num_rows > 0) {
     <table class="table table-bordered">
         <tr>
             <td width="450px"><b>M/s : </b><?=$buyername?></td>
-            <td><b>Invoice No :</b> <?=$_REQUEST['billno']?></td>
+            <td><b>Invoice No :</b> <?=$billno?></td>
             <td><b>Date :</b> <?=$date?></td>
         </tr>
         <tr>
             <td><?=$buyeraddress?></td>
-            <td><b>Challan No :</b> <?=$_REQUEST['billno']?></td>
+            <td><b>Challan No :</b> <?=$billno?></td>
             <td><b>Date :</b> <?=$date?></td>
         </tr>
     </table>

@@ -80,7 +80,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-        $billno = $row['srno'];
+        $billno = $row['bill_no'];
         $date = date('d-m-Y', strtotime($row['sell_date']));
         $buyername = $row['buyer_name'];
         $buyeraddress = $row['buyer_address'];
@@ -122,7 +122,7 @@ if ($result->num_rows > 0) {
         </tr>
         <tr style="height: 100px">
             <td><b>M/s : </b><?=$buyername?><div style="padding-left:35px;"><?=$buyeraddress?></div></td>
-            <td><b>No : </b><?=$_REQUEST['billno']?><br><br><b>Date : </b><?=$date?></td>
+            <td><b>No : </b><?=$billno?><br><br><b>Date : </b><?=$date?></td>
         </tr>
         <tr>
             <td><b>Order No:</b></td>
@@ -172,7 +172,7 @@ if ($result->num_rows > 0) {
             }
         }
         
-        $sql2="SELECT * FROM ".$table_name."_sample WHERE bill_srno=".$billno;
+        $sql2="SELECT * FROM ".$table_name."_sample WHERE bill_srno=".$_GET['billno'];
         $result2 = $conn->query($sql2);
         if ($result2->num_rows > 0) {
             // output data of each row
