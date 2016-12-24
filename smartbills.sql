@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2016 at 03:42 PM
+-- Generation Time: Dec 24, 2016 at 04:01 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -67,6 +67,21 @@ CREATE TABLE `fine_bill` (
   `sell_date` date NOT NULL,
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='PPC BILL';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fine_company_paid`
+--
+
+CREATE TABLE `fine_company_paid` (
+  `srno` int(11) NOT NULL,
+  `company_name` text NOT NULL,
+  `paid_date` date NOT NULL,
+  `amount` text NOT NULL,
+  `remarks` text NOT NULL,
+  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -135,6 +150,21 @@ CREATE TABLE `precision_bill` (
   `sell_date` date NOT NULL,
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='PPC BILL';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `precision_company_paid`
+--
+
+CREATE TABLE `precision_company_paid` (
+  `srno` int(11) NOT NULL,
+  `company_name` text NOT NULL,
+  `paid_date` date NOT NULL,
+  `amount` text NOT NULL,
+  `remarks` text NOT NULL,
+  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -304,6 +334,12 @@ ALTER TABLE `fine_bill`
   ADD PRIMARY KEY (`srno`);
 
 --
+-- Indexes for table `fine_company_paid`
+--
+ALTER TABLE `fine_company_paid`
+  ADD PRIMARY KEY (`srno`);
+
+--
 -- Indexes for table `fine_description`
 --
 ALTER TABLE `fine_description`
@@ -325,6 +361,12 @@ ALTER TABLE `login`
 -- Indexes for table `precision_bill`
 --
 ALTER TABLE `precision_bill`
+  ADD PRIMARY KEY (`srno`);
+
+--
+-- Indexes for table `precision_company_paid`
+--
+ALTER TABLE `precision_company_paid`
   ADD PRIMARY KEY (`srno`);
 
 --
@@ -401,6 +443,11 @@ ALTER TABLE `company_details`
 ALTER TABLE `fine_bill`
   MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=688;
 --
+-- AUTO_INCREMENT for table `fine_company_paid`
+--
+ALTER TABLE `fine_company_paid`
+  MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `fine_description`
 --
 ALTER TABLE `fine_description`
@@ -420,6 +467,11 @@ ALTER TABLE `login`
 --
 ALTER TABLE `precision_bill`
   MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `precision_company_paid`
+--
+ALTER TABLE `precision_company_paid`
+  MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `precision_description`
 --
