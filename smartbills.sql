@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2016 at 09:35 PM
+-- Generation Time: Dec 26, 2016 at 09:42 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -297,6 +297,20 @@ CREATE TABLE `salarygiven` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `track`
+--
+
+CREATE TABLE `track` (
+  `srno` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
+  `pagename` text NOT NULL,
+  `details` text NOT NULL,
+  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `worker`
 --
 
@@ -445,6 +459,12 @@ ALTER TABLE `salarygiven`
   ADD PRIMARY KEY (`srno`);
 
 --
+-- Indexes for table `track`
+--
+ALTER TABLE `track`
+  ADD PRIMARY KEY (`srno`);
+
+--
 -- Indexes for table `worker`
 --
 ALTER TABLE `worker`
@@ -551,6 +571,11 @@ ALTER TABLE `reminder`
 --
 ALTER TABLE `salarygiven`
   MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `track`
+--
+ALTER TABLE `track`
+  MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `worker`
 --

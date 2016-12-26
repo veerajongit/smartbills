@@ -239,7 +239,7 @@ if(isset($_POST['text']) && $_POST['date'] && $_POST['period']){
                 <?php
             }
 
-            //Daily Reminders
+            //Yearly Reminders
             $date = date('Y-m-d');
             $lastdate = date('Y-m-t');
             if ($date == $lastdate && date('d', strtotime($date)) < date('t', strtotime($date))) {
@@ -305,6 +305,25 @@ if(isset($_POST['text']) && $_POST['date'] && $_POST['period']){
                 }
             }
 
+            //Once Reminders
+            $sql = "SELECT * FROM reminder WHERE period='o' AND date = '".date('Y-m-d')."' ";
+            $result = $conn->query($sql);
+            while ($row = $result->fetch_assoc()) { ?>
+                <tr>
+                    <td><?= date('d-m-Y', strtotime($row['date'])) ?></td>
+                    <td><?= $row['remindertext'] ?></td>
+                    <td>
+			Once
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" onclick=" location.href ='home.php?delete=<?= $row['srno'] ?>' ">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+                <?php
+            }
+
             ?>
             </tbody>
         </table>
@@ -335,7 +354,8 @@ if(isset($_POST['text']) && $_POST['date'] && $_POST['period']){
                     <div class="form-group">
                         <label for="period">Set Period:</label>
                         <select class="form-control" name="period" id="period" required>
-                            <option value="d">Daily</option>
+                            <option value="o">Once</option>                            
+			    <option value="d">Daily</option>
                             <option value="m">Monthly</option>
                             <option value="y">Yearly</option>
                         </select>
